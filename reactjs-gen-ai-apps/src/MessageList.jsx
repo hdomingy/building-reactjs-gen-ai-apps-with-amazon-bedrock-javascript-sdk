@@ -1,6 +1,6 @@
 import * as React from "react"
-import { Box, CopyToClipboard, Grid, Container, SpaceBetween } from "@cloudscape-design/components"
-import { marked, options } from "marked";
+import { Box, Grid, Container, SpaceBetween } from "@cloudscape-design/components"
+import { marked } from "marked";
 
 let config = { startOnLoad: true, flowchart: { useMaxWidth: false, htmlLabels: true } };
 
@@ -49,14 +49,8 @@ const BotMessage = ({ msg }) => {
     const contentJSX = msg.content.map((item, i) => {
 
         if (item.type === "text") {
-            //const html_msg = item.text.replace(/\n/g, "<br />")
-            //const html_msg = converter.makeHtml(item.text);
             const html_msg = marked.parse(item.text, {renderer: renderer})
-
-
             return [
-                <CopyToClipboard key={1} copyButtonText="Copy html" copySuccessText="copied!" textToCopy={html_msg} />,
-                <CopyToClipboard key={2} copyButtonText="Copy raw" copySuccessText="copied!" textToCopy={item.text} />,
                 <div key={i} className="bot-message" dangerouslySetInnerHTML={{ __html: html_msg }} ></div>]
         }
         if (item.type === "image") {
